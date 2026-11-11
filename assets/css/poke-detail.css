@@ -1,0 +1,394 @@
+@import url(./global.css);
+
+*  {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Fundo: gradiente com as cores do(s) tipo(s). --c1/--c2 vêm do poke-details.js.
+   Enquanto os dados carregam, aparece um cinza neutro. */
+.backgroundType {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    background-image: linear-gradient(
+        135deg,
+        var(--c1, #9aa5b1),
+        var(--c2, color-mix(in srgb, var(--c1, #9aa5b1) 65%, #fff)),
+        var(--c1, #9aa5b1)
+    );
+    background-size: 200% 200%;
+    animation: bgShift 12s ease-in-out infinite;
+}
+
+@keyframes bgShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.header__content {
+    padding: 1.5rem 1.25rem 0.7rem 1.25rem;
+    animation: fadeUp 0.5s var(--ease-out) backwards;
+}
+
+nav {
+    margin-bottom: 1rem;
+}
+
+.return {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    padding: 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.25s var(--ease-out), background 0.25s;
+}
+
+.return:hover {
+    transform: translateX(-4px);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.return:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
+#nameType {
+    display: flex;
+    flex-direction: column;
+}
+
+.nameNumber h2 {
+    font-weight: bold;
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+    text-transform: capitalize;
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.nameNumber p {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+    opacity: 0.85;
+}
+
+.nameNumber{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    margin-bottom: 0.7rem;
+}
+
+.types {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0;
+}
+
+/* Mesmo selo translúcido da listagem; vence a cor da classe de tipo (.grass etc.) */
+.types p {
+    margin: 0;
+    padding: 0.25rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 3.125rem;
+    text-align: center;
+    transition: transform 0.2s var(--ease-out);
+    animation: fadeUp 0.5s var(--ease-out) backwards;
+}
+
+.types p:hover {
+    transform: scale(1.08);
+}
+
+/* Imagem sobre uma pokébola que gira devagar (o "efeito de fundo" do tipo) */
+.imagePokemon {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: clamp(11rem, 55vw, 17rem);
+    aspect-ratio: 1;
+    margin: 2rem auto 1.5rem;
+}
+
+.imagePokemon::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 0.6rem solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(
+        transparent calc(50% - 0.3rem),
+        rgba(255, 255, 255, 0.2) calc(50% - 0.3rem) calc(50% + 0.3rem),
+        transparent calc(50% + 0.3rem)
+    );
+    animation: spin 24s linear infinite;
+}
+
+img {
+    width: 10rem;
+}
+
+.imagePokemon img {
+    position: relative;
+    width: 78%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.25));
+    animation:
+        pop 0.7s var(--ease-out) backwards,
+        float 4s ease-in-out 0.7s infinite;
+}
+
+@keyframes pop {
+    from { opacity: 0; transform: scale(0.6) rotate(-6deg); }
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.content__main {
+    display: flow-root;
+    flex: 1;
+    background-color: white;
+    border-radius: 25px 25px 0 0;
+    animation: slideUp 0.6s var(--ease-out) backwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+}
+
+.nav {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 1.5rem;
+}
+
+.nav-link {
+    padding: 0.1rem 0.5rem;
+}
+
+.nav-link:hover {
+    background-color: transparent;
+}
+
+.nav-link.active {
+    position: relative;
+    background-color: transparent;
+    color: #000;
+    font-weight: bold;
+}
+
+.nav-link.active::after {
+    position: absolute;
+    right: 0;
+    bottom: -5px;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background-color: #000;
+    content: "";
+    transform-origin: left;
+    animation: underline 0.35s var(--ease-out);
+}
+
+@keyframes underline {
+    from { transform: scaleX(0); }
+}
+
+/* Conteúdo da aba aparece suavemente ao trocar de aba */
+.tab-pane.active {
+    animation: fadeUp 0.4s var(--ease-out);
+}
+
+p {
+    color: #000;
+}
+
+.list {
+    margin: 2rem 1.5rem 1rem 2rem;
+}
+
+h3 {
+    color: black;
+    margin: 0 0 2rem 1.25rem;
+}
+
+.about__list li {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding-bottom: 1.5rem;
+}
+
+.base_stats li {
+    display: grid;
+    grid-template-columns: 100px 40px 2fr;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 1.5rem;
+}
+
+.label {
+    text-transform: capitalize;
+}
+
+.value {
+    text-transform: capitalize;
+}
+
+.bar {
+    width: 90%;
+    height: 5px;
+    background-color: #c7c2c2;
+    border-radius: 10px;
+}
+
+/* As barras "crescem" quando a aba Base Stats é aberta */
+.fill {
+    max-width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    transform-origin: left;
+    animation: grow 0.9s var(--ease-out) backwards;
+}
+
+@keyframes grow {
+    from { transform: scaleX(0); }
+}
+
+.base_stats li:nth-child(1) .fill { animation-delay: 0.05s; }
+.base_stats li:nth-child(2) .fill { animation-delay: 0.10s; }
+.base_stats li:nth-child(3) .fill { animation-delay: 0.15s; }
+.base_stats li:nth-child(4) .fill { animation-delay: 0.20s; }
+.base_stats li:nth-child(5) .fill { animation-delay: 0.25s; }
+.base_stats li:nth-child(6) .fill { animation-delay: 0.30s; }
+
+footer {
+    background-color: white;
+    padding-bottom: 1rem;
+}
+
+.logo__pokemon {
+    display: block;
+    width: 12.5rem;
+    margin: auto;
+}
+
+.low {
+    background-color: rgb(236, 75, 75);
+}
+
+.medium {
+    background-color: rgb(228, 228, 8)
+}
+
+.high {
+    background-color: rgb(95, 223, 95);
+}
+
+/* Celulares pequenos */
+@media screen and (max-width: 380px) {
+    .list {
+        margin: 1.5rem 1rem 1rem 1.25rem;
+    }
+
+    .about__list li {
+        grid-template-columns: 1fr 1.6fr;
+    }
+
+    .base_stats li {
+        grid-template-columns: 84px 32px 1fr;
+    }
+
+    h3 {
+        margin-left: 1rem;
+    }
+}
+
+/* Tablets e notebooks: cartão centralizado em duas colunas (identidade à esquerda, dados à direita) */
+@media screen and (min-width: 900px) {
+    body {
+        background: linear-gradient(135deg, #1e1e2f, #3a1c71, #6a3093) fixed;
+    }
+
+    .backgroundType {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+        grid-template-rows: 1fr auto;
+        width: min(1100px, calc(100% - 4rem));
+        min-height: min(760px, calc(100vh - 4rem));
+        margin: 2rem auto;
+        border-radius: 28px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    }
+
+    .header__content {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        display: flex;
+        flex-direction: column;
+        padding: 2.5rem 2rem;
+    }
+
+    #nameType {
+        flex: 1;
+        justify-content: center;
+    }
+
+    main {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .content__main {
+        border-radius: 0;
+    }
+
+    footer {
+        grid-column: 2;
+        grid-row: 2;
+    }
+}
+
+/* Monitores grandes e ultrawide */
+@media screen and (min-width: 1600px) {
+    .backgroundType {
+        width: 1300px;
+        min-height: 820px;
+    }
+
+    .nameNumber h2 {
+        font-size: 3rem;
+    }
+
+    .imagePokemon {
+        width: 21rem;
+    }
+
+    .list {
+        margin: 2.5rem 2.5rem 1rem 3rem;
+    }
+}
